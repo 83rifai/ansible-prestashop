@@ -1,11 +1,11 @@
 ---
 - name: Create 'prestashop' database
   mysql_db:
-    name=prestashop
+    name={{prestashop_db_name}}
     state=present
 
 - name: Create 'prestashop' user
   mysql_user:
-    name=prestashop
-    password=prestashop
+    name={{prestashop_db_user}}
+    password={{prestashop_db_password}}
     priv=prestashop.*:ALL

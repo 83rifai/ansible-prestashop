@@ -8,3 +8,7 @@ is_vagrant: true
 firewall_enabled: true
 logwatch_email: bodziomista@gmail.com
 logwatch_detail: high
+
+prestashop_db_name: prestashop
+prestashop_db_user: prestashop
+prestashop_db_password: prestashop
