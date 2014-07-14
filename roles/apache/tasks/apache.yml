@@ -1,0 +1,16 @@
+---
+- name: Install Apache
+  apt: 
+    name=apache2
+    state=present
+
+
+- name: Enable 'mod_rewrite'
+  command: a2enmod rewrite
+  notify:
+    - restart apache
+
+- name: Make sure Apache is up and running
+  service:
+    name=apache2
+    state=started

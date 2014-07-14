@@ -1,0 +1,12 @@
+---
+# password created using the 'Passlib' hashing library and command
+#   $ python -c "from passlib.hash import sha512_crypt; print sha512_crypt.encrypt('password')"
+#
+# password: 'password'
+root_password: '$6$rounds=100000$A7zxt0gD.0vhzHXG$bztjcg1kxGUJw8bAP0tMCqaAtXdji.YQ1/Lqnpiq9a7Ewh0tLOKIInuzOeQae6UuVIsDYkYRM5oz8m8YrJXrF1'
+# password: 'password'
+deploy_password: '$6$rounds=100000$.yurXUkokMkD7YTG$TuANlVXWP/yWSjv0xrlFa7/fWUgLTt2pTV/Au3oK6fDf7KgoVJ6Wh6PSyL.9eLkKxRfCjy8.WLc4ud3NwWLY21'
+
+firewall_enabled: true
+logwatch_email: username@domain.com
+logwatch_detail: high

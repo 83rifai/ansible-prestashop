@@ -1,0 +1,10 @@
+---
+# http://docs.ansible.com/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module
+
+root_password: '$1$XGL3TQ8O$SONCqBpfucmmueLXHIFXy0'
+deploy_password: '$1$5FmOIYpB$I7o8YPSruVDLhHIa8.I.30'
+is_vagrant: true
+
+firewall_enabled: true
+logwatch_email: bodziomista@gmail.com
+logwatch_detail: high

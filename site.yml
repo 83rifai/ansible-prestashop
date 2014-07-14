@@ -1,0 +1,10 @@
+---
+# The main playbook to deploy the site
+
+- name: Configure prestashop server
+  hosts: prestashop
+  roles:
+    - common
+    - mysql
+    - apache
+    - prestashop

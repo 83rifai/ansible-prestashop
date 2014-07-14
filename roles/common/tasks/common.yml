@@ -1,0 +1,10 @@
+---
+- include: bootstrap.yml
+  tags: 
+    - bootstrap
+    - common
+
+- include: python.yml
+  tags: 
+    - python
+    - common
