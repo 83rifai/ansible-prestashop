@@ -1,0 +1,11 @@
+---
+- name: Create 'prestashop' database
+  mysql_db:
+    name=prestashop
+    state=present
+
+- name: Create 'prestashop' user
+  mysql_user:
+    name=prestashop
+    password=prestashop
+    priv=prestashop.*:ALL
