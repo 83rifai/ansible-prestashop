@@ -1,0 +1,31 @@
+---
+- name: Install PHP 5 related packages
+  apt:
+    pkg={{ item }}
+    state=present
+  with_items:
+    - php5
+    - php5-curl
+    - php5-mcrypt
+    - php5-gd
+    - php5-mysql
+    - php5-cli
+
+# http://ecommercowy.pl/12-porad-odnosnie-optymalizacji-php-ini-dla-prestashop/
+- name: Update PHP configuration for apache (php.ini) 
+  template:
+    src: php.ini.j2
+    dest: /etc/php5/apache2/php.ini
+  register: php_configuration_apache2
+
+- name: Update PHP configuration for cli (php.ini)
+  template:
+    src: php.ini.j2
+    dest: /etc/php5/cli/php.ini
+  register: php_configuration_cli
+
+- name: Restart apache
+  service:
+    name: apache2
+    state: restarted
+  when: php_configuration_apache2.changed or php_configuration_cli.changed
