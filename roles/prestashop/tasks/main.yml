@@ -3,3 +3,13 @@
   tags:
     - prestashop
     - php
+
+- include: install.yml
+  tags:
+    - prestashop
+    - install
+
+- include: configure.yml
+  tags:
+    - prestashop
+    - configure

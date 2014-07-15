@@ -1,0 +1,22 @@
+---
+- name: Check if prestashop already installed
+  shell: /usr/bin/test -d {{ prestashop_dest }}
+  register: prestashop_installed
+  ignore_errors: True
+  changed_when: "prestashop_installed.rc != 0"
+
+- name: Create destination directory at {{ prestashop_dest }}
+  file:
+    path={{ prestashop_dest }}
+    owner={{ prestashop_owner }}
+    group={{ prestashop_group }}
+    state=directory
+  when: prestashop_installed.changed
+
+- name: Clone pretashop repo
+  git:
+    repo="https://github.com/PrestaShop/PrestaShop/"
+    dest={{ prestashop_dest }}
+    version="{{ prestashop_version }}"
+    update=no
+  when: prestashop_installed.changed
