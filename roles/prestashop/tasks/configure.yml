@@ -45,7 +45,7 @@
     --db_server={{ prestashop_db_host }}
     --db_name={{ prestashop_db_name }} 
     --db_user={{ prestashop_db_user }}
-    --db_passwod={{ prestashop_db_password }}
+    --db_password={{ prestashop_db_password }}
   register: prestashop_configured_properly
   when: prestashop_configure_using_cli and prestashop_already_configured.rc == 0
 
