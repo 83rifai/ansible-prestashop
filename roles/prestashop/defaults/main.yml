@@ -2,3 +2,15 @@ prestashop_dest: /var/www/prestashop
 prestashop_owner: www-data
 prestashop_group: www-data
 prestashop_version: 1.6.0.8
+
+prestashop_admin_directory: my4dm1n
+prestashop_admin_auth_user_file: /var/www/.htpasswd_prestashop
+prestashop_admin_ip_restrict: no
+prestashop_admin_ip: 127.0.0.1
+# http://aspirine.org/htpasswd_en.html
+# login: admin, password: secret
+prestashop_admins:
+  - { login: admin, encrypted_password: $apr1$YvyQX1OV$YX/utl.b2cTupI2jYhrdO/ }
+
+prestashop_configure_using_cli: yes
+prestashop_domain: localhost

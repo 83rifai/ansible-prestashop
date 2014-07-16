@@ -1,6 +1,7 @@
 ---
 # http://docs.ansible.com/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module
 
+# --- Common ---
 root_password: '$1$XGL3TQ8O$SONCqBpfucmmueLXHIFXy0'
 deploy_password: '$1$5FmOIYpB$I7o8YPSruVDLhHIa8.I.30'
 is_vagrant: true
@@ -9,6 +10,25 @@ firewall_enabled: true
 logwatch_email: bodziomista@gmail.com
 logwatch_detail: high
 
+# --- MySQL ---
+prestashop_db_host: localhost
 prestashop_db_name: prestashop
 prestashop_db_user: prestashop
 prestashop_db_password: prestashop
+
+# --- Prestashop Software ---
+prestashop_version: 1.6.0.8
+prestashop_domain: localhost
+
+prestashop_dest: /var/www/prestashop
+prestashop_owner: www-data
+prestashop_group: www-data
+
+prestashop_admin_directory: my4dm1n
+prestashop_admin_auth_user_file: /var/www/.htpasswd_prestashop
+prestashop_admin_ip_restrict: no
+prestashop_admin_ip: 127.0.0.1
+prestashop_admins:
+  - { login: admin, encrypted_password: $apr1$YvyQX1OV$YX/utl.b2cTupI2jYhrdO/ }
+
+prestashop_configure_using_cli: yes

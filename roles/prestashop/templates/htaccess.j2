@@ -1,0 +1,13 @@
+AuthUserFile  {{ prestashop_admin_auth_user_file }}
+AuthName "Prestashop Admin Access"
+AuthType Basic
+Require valid-user
+Options -Indexes
+
+{% if prestashop_admin_ip_restrict %}
+
+Order Allow, Deny
+Deny from all
+Allow from {{ prestashop_admin_ip }}
+
+{% endif %}

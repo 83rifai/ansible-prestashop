@@ -1,0 +1,83 @@
+---
+- name: Create php environment information file
+  template:
+    src=phpinfo.php.j2
+    dest={{ prestashop_dest }}
+    owner={{ prestashop_owner }}
+    group={{ prestashop_group }}
+
+- name: Move 'admin-dev' directory to {{ prestashop_admin_directory }}
+  command: creates="{{ prestashop_dest }}/{{ prestashop_admin_directory }}" mv {{ prestashop_dest }}/admin-dev {{ prestashop_dest }}/{{ prestashop_admin_directory }}
+
+- name: Secure admin access (secure admin directory with .htaccess file)
+  template:
+    src=htaccess.j2
+    dest={{ prestashop_dest }}/{{ prestashop_admin_directory }}
+    owner={{ prestashop_owner }}
+    group={{ prestashop_group }}  
+
+- name: Secure admin acccess (create .htpasswd file)
+  template:
+    src=htpasswd.j2
+    dest={{ prestashop_admin_auth_user_file }}
+    owner={{ prestashop_owner }}
+    group={{ prestashop_group }}
+
+- name: Delete useless files
+  file: 
+    path={{ item }}
+    state=absent
+  with_items:
+    - README.md
+    - CONTRIBUTING.md
+    - CONTRIBUTORS.md
+    - docs
+
+- name: Check if not already configured
+  shell: /usr/bin/test -d {{ prestashop_dest }}/install-dev
+  register: prestashop_already_configured
+  ignore_errors: True
+
+- name: Configure prestashop using cli
+  shell:
+    php {{ prestashop_dest }}/install-dev/index_cli.php
+    --domain={{ prestashop_domain }}
+    --db_server={{ prestashop_db_host }}
+    --db_name={{ prestashop_db_name }} 
+    --db_user={{ prestashop_db_user }}
+    --db_passwod={{ prestashop_db_password }}
+  register: prestashop_configured_properly
+  when: prestashop_configure_using_cli and prestashop_already_configured.rc == 0
+
+- assert: { that: "prestashop_configured_properly.rc == 0" }
+  when: prestashop_already_configured.rc == 0 and prestashop_configured_properly.rc == 0
+
+- name: Delete installation scripts
+  file:
+    dest={{ prestashop_dest }}/install-dev
+    state=absent
+  when: prestashop_configure_using_cli and prestashop_already_configured.rc == 0 and prestashop_configured_properly.rc != 0 
+
+- name: Change prestashop directory ownership
+  file:
+    dest={{ prestashop_dest }}
+    owner={{ prestashop_owner }}
+    group={{ prestashop_group }}
+    recurse=yes
+
+- name: Enable prestashop virtual host
+  template:
+    src=vhost.j2
+    dest=/etc/apache2/sites-available/default
+  notify:
+    - restart apache
+
+- name: Ensure mysql is up and running
+  service:
+    name=mysql
+    state=started
+
+- name: Ensure apache is up and running
+  service:
+    name=apache2
+    state=started

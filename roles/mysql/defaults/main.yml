@@ -1,4 +1,5 @@
 ---
+prestashop_db_host: localhost
 prestashop_db_name: prestashop
 prestashop_db_user: prestashop
 prestashop_db_password: prestashop  
