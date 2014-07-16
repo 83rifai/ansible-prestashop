@@ -11,6 +11,7 @@
     owner={{ prestashop_owner }}
     group={{ prestashop_group }}
     state=directory
+    recurse=yes
   when: prestashop_installed.changed
 
 - name: Clone pretashop repo
