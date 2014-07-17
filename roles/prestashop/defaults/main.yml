@@ -12,5 +12,11 @@ prestashop_admin_ip: 127.0.0.1
 prestashop_admins:
   - { login: admin, encrypted_password: $apr1$YvyQX1OV$YX/utl.b2cTupI2jYhrdO/ }
 
+prestashop_superuser:
+  firstname: Admin
+  lastname: Admin
+  email: admin@local.host
+  password: secret
+
 prestashop_configure_using_cli: yes
-prestashop_domain: localhost
+prestashop_domain: 192.168.101.10

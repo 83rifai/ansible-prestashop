@@ -11,11 +11,19 @@
   with_items:
     - /etc/apache2/sites-available/default
     - /etc/apache2/sites-available/default-ssl
+    - /etc/apache2/sites-enabled/000-default
   notify: 
     - restart apache
 
 - name: Enable 'mod_rewrite'
   command: a2enmod rewrite
+  notify:
+    - restart apache
+
+- name: Create fqdn configuration file (prevent apache error message 'Could not reliably determine the server's fully qualified domain name ...')
+  copy:
+    dest=/etc/apache2/conf.d/fqdn
+    content="ServerName localhost"
   notify:
     - restart apache
 

@@ -25,7 +25,7 @@
 
 - name: Delete useless files
   file: 
-    path={{ item }}
+    path={{ prestashop_dest }}/{{ item }}
     state=absent
   with_items:
     - README.md
@@ -46,6 +46,10 @@
     --db_name={{ prestashop_db_name }} 
     --db_user={{ prestashop_db_user }}
     --db_password={{ prestashop_db_password }}
+    --firstname={{ prestashop_superuser.firstname }}
+    --lastname={{ prestashop_superuser.lastname }}
+    --email={{ prestashop_superuser.email }}
+    --password={{ prestashop_superuser.password }}
   register: prestashop_configured_properly
   when: prestashop_configure_using_cli and prestashop_already_configured.rc == 0
 
@@ -56,7 +60,7 @@
   file:
     dest={{ prestashop_dest }}/install-dev
     state=absent
-  when: prestashop_configure_using_cli and prestashop_already_configured.rc == 0 and prestashop_configured_properly.rc != 0 
+  when: prestashop_configure_using_cli and prestashop_already_configured.rc == 0 # and prestashop_configured_properly.rc != 0 
 
 - name: Change prestashop directory ownership
   file:
@@ -65,12 +69,21 @@
     group={{ prestashop_group }}
     recurse=yes
 
-- name: Enable prestashop virtual host
+- name: Create prestashop virtual host
   template:
     src=vhost.j2
-    dest=/etc/apache2/sites-available/default
+    dest=/etc/apache2/sites-available/prestashop
+
+- name: Enable prestashop virtual host
+  file:
+    src=/etc/apache2/sites-available/prestashop
+    dest=/etc/apache2/sites-enabled/000-prestashop
+    state=link
   notify:
     - restart apache
+
+- name: Open firewall port 80 
+  action: shell ufw allow 80
 
 - name: Ensure mysql is up and running
   service:

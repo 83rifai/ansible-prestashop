@@ -1,4 +1,6 @@
 <VirtualHost *:80>
 ServerName {{ prestashop_domain }}
+ServerAlias {{ prestashop_domain }}
 DocumentRoot "{{ prestashop_dest }}"
+DirectoryIndex index.php
 </VirtualHost>
