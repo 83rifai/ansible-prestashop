@@ -46,7 +46,7 @@
 - name: Add SSH public key to user 'deploy'
   authorized_key:
     user=deploy
-    key="{{ lookup('file', '../files/iaintshine_devstation.pub') }}"
+    key="{{ lookup('file', '../files/id_rsa.pub') }}"
 
 - name: Add user 'deploy' to sudoers
   lineinfile:
